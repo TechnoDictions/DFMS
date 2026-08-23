@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1E3A2B; /* Emerald Green */
+  --color-primary-hover: #152B20;
+  --color-primary-light: #2A4F3C;
+  --color-secondary: #0f172a;
+  --color-accent: #C7B58E; /* Deeper Gold for text */
+  --color-accent-hover: #A8956A;
+  --color-accent-light: #E8E2D2; /* Champagne Gold border/bg */
+  
+  --color-bg-main: #FCFBF7; /* Ivory/Cream canvas */
+  --color-bg-card: #FFFFFF;
+  --color-border: #E8E2D2; /* Champagne Gold */
+  
+  --color-text-main: #1E3A2B; /* Dark Emerald for text */
+  --color-text-muted: #6C7A73; /* Muted Emerald-grey */
+  --color-text-gold: #C7B58E;
+}
+
+@layer base {
+  :root {
+    --primary: #1E3A2B;
+    --primary-hover: #152B20;
+    --primary-light: #2A4F3C;
+    --secondary: #0f172a;
+    --accent: #C7B58E;
+    --accent-hover: #A8956A;
+    --accent-light: #E8E2D2;
+    
+    --bg-main: #FCFBF7;
+    --bg-card: #FFFFFF;
+    --border: #E8E2D2;
+    
+    --text-main: #1E3A2B;
+    --text-muted: #6C7A73;
+    --text-gold: #C7B58E;
+  }
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utilities for luxury micro-interactions */
+.spring-transition {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.levitate {
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+.levitate:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -10px rgba(30, 58, 43, 0.15);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+}
+
+.luxury-shadow {
+  box-shadow: 0 4px 20px -2px rgba(30, 58, 43, 0.05);
+}
+
+/* Custom Scrollbar for luxury feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
