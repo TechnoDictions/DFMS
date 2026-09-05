@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import { useSync } from '../hooks/useSync';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { 
   Cloud, CloudOff, RefreshCw, Download, Monitor, Smartphone, 
-  X, CheckCircle2, ShieldCheck, LogOut, Sparkles, AlertCircle 
+  X, CheckCircle2, ShieldCheck, LogOut, Sparkles, AlertCircle, 
+  User, CreditCard 
 } from 'lucide-react';
 
 export default function SyncAndInstallHeader() {
@@ -16,10 +18,27 @@ export default function SyncAndInstallHeader() {
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+  const [userAvatar, setUserAvatar] = useState<string | null>(null);
   const supabase = createClient();
 
   useEffect(() => {
     setMounted(true);
+
+    async function getUser() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          setUserEmail(user.email || null);
+          setUserName(user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || null);
+          setUserAvatar(user.user_metadata?.avatar_url || null);
+        }
+      } catch (e) {
+        console.warn('Auth user fetch in header:', e);
+      }
+    }
+    getUser();
 
     // Capture PWA install prompt event
     const handleBeforeInstall = (e: Event) => {
@@ -121,6 +140,29 @@ export default function SyncAndInstallHeader() {
           <Download className="w-3.5 h-3.5" />
           <span className="hidden md:inline">Install App</span>
         </button>
+
+        {/* Account & SaaS Plan Profile Button */}
+        <Link
+          href="/portal/admin/account"
+          className="flex items-center gap-2 px-3 py-1 rounded-xl bg-[var(--bg-main)] hover:bg-gray-100 border border-[var(--border)] transition-colors group"
+          title="Manage Account, Backups & SaaS Subscription"
+        >
+          {userAvatar ? (
+            <img src={userAvatar} alt="Avatar" className="w-6 h-6 rounded-lg object-cover border border-[var(--primary)]" />
+          ) : (
+            <div className="w-6 h-6 rounded-lg bg-[var(--accent-light)] text-[var(--primary)] flex items-center justify-center text-xs font-bold">
+              {userEmail ? userEmail.charAt(0).toUpperCase() : '👨‍🌾'}
+            </div>
+          )}
+          <div className="text-left hidden lg:block">
+            <span className="text-xs font-bold text-[var(--text-main)] group-hover:text-[var(--primary)] block leading-tight truncate max-w-[120px]">
+              {userName || 'Account'}
+            </span>
+            <span className="text-[10px] font-black text-amber-700 uppercase tracking-wider block">
+              SaaS Pro Trial
+            </span>
+          </div>
+        </Link>
 
         {/* Sign Out */}
         <button
