@@ -1,5 +1,9 @@
 import Link from 'next/link';
-import { Home, Users, Settings, Activity, LayoutDashboard, LogOut, LineChart, BadgeDollarSign, UserSquare2, Syringe, Wheat, ReceiptText } from 'lucide-react';
+import { 
+  Home, Users, Settings, Activity, LayoutDashboard, LogOut, 
+  LineChart, BadgeDollarSign, UserSquare2, Syringe, Wheat, 
+  ReceiptText, Sparkles, ShieldCheck 
+} from 'lucide-react';
 import SyncAndInstallHeader from '@/components/SyncAndInstallHeader';
 
 export default function AdminLayout({
@@ -72,6 +76,14 @@ export default function AdminLayout({
           <Link href="/portal/admin/employee" className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-gray-50 transition-colors">
             <Users className="w-5 h-5" />
             Staff & Payroll
+          </Link>
+
+          <div className="pt-4 pb-2 px-4 text-xs font-bold text-[var(--text-gold)] uppercase tracking-wider">
+            Cloud & SaaS License
+          </div>
+          <Link href="/portal/admin/account" className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-emerald-800 bg-emerald-50 hover:bg-emerald-100 transition-colors">
+            <ShieldCheck className="w-5 h-5 text-emerald-700" />
+            Account & Subscription
           </Link>
         </nav>
       </aside>
